@@ -24,17 +24,20 @@ summary{padding:12px 0;font-weight:700;cursor:pointer}
 .quick button.on{background:var(--ac);color:#fff}
 .st{align-items:center;gap:4px}.st i{color:var(--mu);font-style:normal}.nt{color:#e5484d;font-size:14px;margin-top:6px;font-weight:600}
 details.sd{border:0;border-left:3px solid var(--chip);border-radius:0;margin:6px 0 6px 2px;padding:0 0 0 10px;background:transparent}.sd>summary{font-size:15px;padding:8px 0}summary small{color:var(--mu);font-weight:400;font-size:12px}
+.card[data-k]{cursor:pointer}.go{color:var(--ac);font-size:13px;font-weight:700;margin-top:8px;text-align:right}.flash{animation:fl 2.5s}@keyframes fl{0%,60%{background:var(--hl)}100%{background:transparent}}
+.top{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));padding:12px 16px;border:0;border-radius:24px;background:var(--ac);color:#fff;font-weight:700;box-shadow:0 2px 8px #0004}
 .row{padding:8px 0;border-top:1px solid var(--bd)}.sub{color:var(--ac);font-size:13px;font-weight:700;margin-top:8px}
 .empty{color:var(--mu);padding:8px 0 12px}.note{color:var(--mu);font-size:13px;margin-top:16px}
 </style></head><body><main>
 <h1>📟 결제 단말기·POS 매뉴얼</h1>
-<div class="quick" id="fv"></div><div class="quick" id="fd" style="margin-top:0"></div>
+<div class="quick" id="fm"></div><div class="quick" id="fv"></div><div class="quick" id="fd" style="margin-top:0"></div>
 <input id="q" type="search" placeholder="예: 할부, 서명, 전표, 부가세" autocomplete="off">
 <div class="quick" id="quick"></div>
 <div id="res"></div>
-<h2 style="font-size:16px;margin:20px 0 4px">전체 메뉴</h2>
+<h2 id="th" style="font-size:16px;margin:20px 0 4px">전체 메뉴</h2>
 <div id="tree"></div>
 <p class="note">경로 맨 앞은 단말기 키패드 버튼, 숫자는 메뉴 번호입니다.</p>
+<button class="top" onclick="window.scrollTo({top:0,behavior:'smooth'});document.getElementById('q').focus()">↑ 검색</button>
 </main>
 <script>
 const Y="0.예|1.아니오",PS="0.사용안함|1.COM1|2.COM2|3.COM3";
@@ -50,6 +53,7 @@ const PD=[
 {t:1,p:"할인",i:[["% 할인","주문 화면에서 할인해줄 상품라인 클릭>숫자패드에서 원하는 입력>%할인"],["금액 할인","주문 화면에서 할인해줄 상품라인 클릭>숫자패드에서 원하는 입력>금액할인"],["전체 할인","주문 화면에서 전체선택>숫자패드에서 원하는 금액 입력>% 할인 or 금액할인"]]},
 {t:1,p:"매출확인",i:[["매출요약","판매화면 X(우측상단)>메인메뉴>매출요약"]]},
 {t:1,p:"ASP",i:[["ASP연결","판매화면 X(우측상단)>메인메뉴>영업정보관리>ASP연결"]]},
+{t:1,p:"저울상품 연동",i:[["0.저울 메뉴코드 받기","저울 회사에 메뉴 코드 요청","보통 앞에 저울코드 20이 들어가게 준다고 함"],["1.ASP 상품등록","ASP 상품등록>바코드에 20+상품코드 입력>가격구분: 비정가상품","예) 상품코드 0001 돼지 목살 → 바코드 200001"],["2.POS 환경설정","환경설정>장비>스캐너>스캐너 제어형태 설정>전자저울 바코드 형태 선택","선택 형태: 20+상품코드(4,5)+가격(6)+검사필드(1)"]]},
 {t:1,p:"마감",i:[["영업마감","판매화면 X(우측상단)>메인메뉴>마감정산>시재내역>돈통현금입력>마감"],["종료","포스종료"]]}
 ];
 const nte=n=>n?'<div class="nt">⚠ '+esc(n)+'</div>':"";
@@ -61,25 +65,34 @@ const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 function hl(s,q){s=esc(s);if(!q)return s;const i=s.toLowerCase().indexOf(q.toLowerCase());return i<0?s:s.slice(0,i)+"<mark>"+s.slice(i,i+q.length)+"</mark>"+s.slice(i+q.length)}
 const chips=(o,st)=>o&&(st||o.includes(">"))?'<div class="opt st">'+o.split(">").map(x=>"<span>"+esc(x.trim())+"</span>").join("<i>›</i>")+"</div>":o?'<div class="opt">'+o.split("|").map(x=>"<span>"+esc(x)+"</span>").join("")+"</div>":"";
 const ok=x=>(fv=="전체"||x.v==fv)&&(fd=="전체"||x.d==fd);
-function card(x,q){return '<div class="card"><div class="nm"><span class="tag">'+x.v+' '+x.d+'</span>'+hl(x.n,q)+'</div><div class="path">'+esc(x.p)+'</div>'+chips(x.o,x.st)+nte(x.nt)+'</div>'}
-function search(){const q=$("q").value.trim(),r=$("res");
+function key(x){return encodeURIComponent([x.v,x.d,x.p,x.n].join("|"))}
+function card(x,q){return '<div class="card" data-k="'+key(x)+'"><div class="nm"><span class="tag">'+x.v+' '+x.d+'</span>'+hl(x.n,q)+'</div><div class="path">'+esc(x.p)+'</div>'+chips(x.o,x.st)+nte(x.nt)+'<div class="go">메뉴 위치로 이동 ›</div></div>'}
+function search(){const q=$("q").value.trim(),r=$("res");if(mode=="fix")return fixSearch(q,r);
  if(!q){r.innerHTML="";return}
  const k=norm(q),m=flat.filter(x=>ok(x)&&norm(x.n+x.p+x.nt+x.o.replace(/\|/g," ")).includes(k));
  r.innerHTML=m.length?'<div class="note">'+m.length+'건</div>'+m.map(x=>card(x,q)).join(""):'<div class="empty">검색 결과가 없습니다. VAN사·장비 필터를 확인하거나 다른 단어로 찾아보세요.</div>'}
 const cnt=n=>n.items.length+n.ch.reduce((a,c)=>a+cnt(c),0);
 function body(n){const E=[...n.items.map(it=>({k:parseInt(it[0]),it})),...n.ch.map(c=>({k:parseInt(c.name),c}))];
  if(E.every(e=>!isNaN(e.k)))E.sort((x,y)=>x.k-y.k);else E.sort((x,y)=>(!!x.c)-(!!y.c));
- return E.map(e=>e.c?'<details class="sd"><summary>'+esc(e.c.name)+' <small>'+cnt(e.c)+'</small></summary>'+body(e.c)+'</details>':'<div class="row"><div class="nm" style="font-size:15px">'+esc(e.it[0])+'</div>'+chips(e.it[1],e.it[3])+nte(e.it[2])+'</div>').join("")}
-function tree(){let t="";
+ return E.map(e=>e.c?'<details class="sd"><summary>'+esc(e.c.name)+' <small>'+cnt(e.c)+'</small></summary>'+body(e.c)+'</details>':'<div class="row" data-k="'+e.it[4]+'"><div class="nm" style="font-size:15px">'+esc(e.it[0])+'</div>'+chips(e.it[1],e.it[3])+nte(e.it[2])+'</div>').join("")}
+function tree(){let t="";const fx=mode=="fix";$("th").style.display=fx?"none":"";$("quick").style.display=fx?"none":"";$("q").placeholder=fx?"증상 검색 (예: 출력 안 됨)":"예: 할부, 서명, 전표, 부가세";if(fx){$("tree").innerHTML="";return}
  Object.entries(VANS).forEach(([v,ds])=>{if(fv!="전체"&&v!=fv)return;
   Object.entries(ds).forEach(([d,gs])=>{if(fd!="전체"&&d!=fd)return;
    const root={items:[],ch:[]};
-   gs.forEach(g=>{let cur=root;g.p.split(" › ").forEach(p=>{let c=cur.ch.find(x=>x.name==p);if(!c){c={name:p,items:[],ch:[]};cur.ch.push(c)}cur=c});g.i.forEach(i=>cur.items.push([i[0],i[1],i[2],g.t]))});
+   gs.forEach(g=>{let cur=root;g.p.split(" › ").forEach(p=>{let c=cur.ch.find(x=>x.name==p);if(!c){c={name:p,items:[],ch:[]};cur.ch.push(c)}cur=c});g.i.forEach(i=>cur.items.push([i[0],i[1],i[2],g.t,encodeURIComponent([v,d,g.p,i[0]].join("|"))]))});
    t+='<details><summary>'+v+' › '+d+' <small>'+cnt(root)+'</small></summary>'+(gs.length?body(root):'<div class="empty">내용 준비중</div>')+'</details>'})});
  $("tree").innerHTML=t}
+const FX=[
+{v:"KICC",d:"POS",t:"배달의민족 같이 쓰면 영수증이 출력되지 않음",k:"출력 안됨 프린터 배달앱 배민 영수증",c:"KICC 단말기가 리더기 겸용으로 설정되어 있음. 프린터용으로만 설정하면 출력됨",i:[["전제조건","POS에 리더기·싸인패드를 시리얼로 연결","싸인패드가 단말기에 연결되어 있으면 안 됨"],["방법1-① 이지체크 단말기","특수>2.부가장치>2.POS>POS속도설정>동작모드: 1.단말기","POS·키오스크 같이 사용해도 된다고 함"],["방법1-② 싸인패드","Y자 케이블로 POS에 시리얼 방식으로 직접 연결"],["방법1-③ 이지포스 프린터","환경설정>장비설정>프린터>프린터종류: 도시바","도시바로 설정하면 단말기를 나중에 리더기로 바꿔도 단말기가 반응 없음"],["방법1-④ 이지포스 싸인패드","환경설정>장비설정>싸인패드>시리얼제어(단말기 연동 X)"],["방법1-⑤ 주방프린터 배달출력","환경설정>장비설정>주방프린터>점유안함"],["방법2","배달 전용으로 별도 프린터 설치"]]}
+];
+let mode="menu";
+function fixSearch(q,r){const k=norm(q);
+ const m=FX.filter(x=>ok(x)&&(!k||norm(x.t+x.k+x.c+x.i.map(i=>i.join(" ")).join(" ")).includes(k)));
+ r.innerHTML=m.length?'<div class="note">'+m.length+'건</div>'+m.map(x=>'<div class="card"><div class="nm"><span class="tag">'+x.v+' '+x.d+'</span>'+hl(x.t,q)+'</div><div class="path">원인: '+esc(x.c)+'</div>'+x.i.map(([n,o,nt])=>'<div class="row"><div class="nm" style="font-size:15px">'+esc(n)+'</div>'+chips(o,1)+nte(nt)+'</div>').join("")+'</div>').join(""):'<div class="empty">해당하는 문제 해결 항목이 없습니다. 필터를 확인하거나 다른 단어로 찾아보세요.</div>'}
 function filt(){const f=(id,arr,cur,set)=>{$(id).innerHTML=arr.map(w=>'<button class="'+(w==cur?"on":"")+'">'+w+'</button>').join("");$(id).onclick=e=>{if(e.target.tagName=="BUTTON"){set(e.target.textContent);filt();search();tree()}}};
- f("fv",["전체",...Object.keys(VANS)],fv,x=>fv=x);f("fd",["전체","POS","단말기"],fd,x=>fd=x)}
+ f("fm",["메뉴 찾기","문제 해결"],mode=="fix"?"문제 해결":"메뉴 찾기",x=>mode=x=="문제 해결"?"fix":"menu");f("fv",["전체",...Object.keys(VANS)],fv,x=>fv=x);f("fd",["전체","POS","단말기"],fd,x=>fd=x)}
 $("q").addEventListener("input",search);
+$("res").onclick=e=>{const c=e.target.closest(".card");if(!c)return;const r=document.querySelector('.row[data-k="'+c.dataset.k+'"]');if(!r)return;let p=r;while((p=p.parentElement.closest("details")))p.open=true;r.scrollIntoView({behavior:"smooth",block:"center"});r.classList.remove("flash");void r.offsetWidth;r.classList.add("flash")};
 $("quick").innerHTML=QUICK.map(w=>'<button>'+w+'</button>').join("");
 $("quick").onclick=e=>{if(e.target.tagName=="BUTTON"){$("q").value=e.target.textContent;search();window.scrollTo({top:0,behavior:"smooth"})}};
 filt();tree();
