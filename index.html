@@ -69,7 +69,8 @@ const PD=[
 {t:1,p:"후불형 › 마감",i:[["영업마감","판매화면 X(우측상단)>메인메뉴>마감정산>시재내역>돈통현금입력>마감"],["종료","포스종료"]]}
 ];
 const nte=n=>n?'<div class="nt">⚠ '+esc(n)+'</div>':"";
-const VANS={KICC:{POS:PD,"단말기":KD},KPN:{POS:[],"단말기":[]},KIS:{POS:[],"단말기":[]}};
+const TT=[{"p":"토스 터미널","i":[["매출달력",""],["돈통열기",""]]},{"p":"토스 터미널 › 결제내역/취소","i":[["직전 결제 보기","영수증출력|결제취소"],["해당 날짜 선택 후 결제내역 선택","영수증출력|결제취소"]]},{"p":"토스 터미널 › 매출리포트","i":[["화면 단위 전환","오른쪽 상단 버튼 터치>일간/주간/월간"]]},{"p":"토스 터미널 › 매출리포트 › 카테고리","i":[["카드사별",""],["카테고리별",""],["메뉴별",""]]},{"p":"토스 터미널 › 매출리포트 › 카테고리 › 매출요약","i":[["실매출",""],["총매출",""],["주문건수",""],["취소",""],["할인",""]]},{"p":"토스 터미널 › 매출리포트 › 카테고리 › 결제수단별","i":[["카드",""],["QR코드/바코드",""],["현금",""]]},{"p":"토스 터미널 › 매출리포트 › 결제내역 보기","i":[["해당 날짜 선택 후 결제내역 선택","영수증출력|결제취소"]]},{"p":"토스 터미널 › 매출리포트 › 출력하기","i":[["출력 항목 선택",""]]},{"p":"토스 터미널 › 설정 › 왼쪽 메뉴","i":[["가맹점명",""],["단말기초기화",""],["로그아웃",""]]},{"p":"토스 터미널 › 설정 › 오른쪽 메뉴","i":[["매출·리포트설정",""],["토스 프론트 연결하기",""],["토스앱연결하기",""],["과세설정",""],["밝기",""],["사운드",""],["토스터미널 정보",""],["결제 정보",""],["시스템 설정",""],["OS 업데이트 확인",""],["토스 터미널 재시작",""]]},{"p":"토스 터미널 › 설정 › 오른쪽 메뉴 › 프린터","i":[["테스트 프린터",""]]},{"p":"토스 터미널 › 설정 › 오른쪽 메뉴 › 프린터 › 영수증 프린터설정","i":[["영수증 기본 출력 설정","미출력|항상출력"],["출력 장수","1장~6장 선택"],["가맹점용 영수증","토글 활성화"]]},{"p":"토스 터미널 › 설정 › 오른쪽 메뉴 › 프린터 › 토스 포스 프린터 설정","i":[["포스에 연결해 프린터로 사용하기","포스앱>설정>프린터 추가하기>연결유형: [토스 터미널] 선택>IP 주소 입력","IP 주소는 터미널에 표시됨"]]},{"p":"토스 터미널 › 설정 › 오른쪽 메뉴 › 프린터 › 타사 포스 프린터 설정","i":[["연결방식","설정안함|시리얼|네트워크"]]},{"p":"토스 터미널 › 설정 › 오른쪽 메뉴 › 프린터 › 타사 포스 프린터 설정 › 시리얼","i":[["Baud rate","9600(기본)"]]},{"p":"토스 터미널 › 설정 › 오른쪽 메뉴 › 프린터 › 타사 포스 프린터 설정 › 네트워크","i":[["IP주소","입력"],["포트","9100(기본)"]]}];
+const VANS={KICC:{POS:PD,"단말기":KD},KPN:{POS:[],"단말기":TT},KIS:{POS:[],"단말기":[]}};
 const flat=[];let fv="전체",fd="전체";
 Object.entries(VANS).forEach(([v,ds])=>Object.entries(ds).forEach(([d,gs])=>gs.forEach(g=>g.i.forEach(([n,o,nt])=>flat.push({v,d,n,o,nt:nt||"",st:g.t,p:g.p})))));
 const $=id=>document.getElementById(id),norm=s=>s.toLowerCase().replace(/\s+/g,"");
@@ -77,7 +78,7 @@ const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
 function hl(s,q){s=esc(s);if(!q)return s;const i=s.toLowerCase().indexOf(q.toLowerCase());return i<0?s:s.slice(0,i)+"<mark>"+s.slice(i,i+q.length)+"</mark>"+s.slice(i+q.length)}
 const chips=(o,st)=>o&&(st||o.includes(">"))?'<div class="opt st">'+o.split(">").map(x=>"<span>"+esc(x.trim())+"</span>").join("<i>›</i>")+"</div>":o?'<div class="opt">'+o.split("|").map(x=>"<span>"+esc(x)+"</span>").join("")+"</div>":"";
 const ok=x=>(fv=="전체"||x.v==fv)&&(fd=="전체"||x.d==fd);
-function tg(x){const m=(x.p||"").match(/^(후불형|선불형)/);return x.v+" "+x.d+(m?" · "+m[1]:"")}
+function tg(x){const m=(x.p||"").match(/^(후불형|선불형|토스 터미널)/);return x.v+" "+x.d+(m?" · "+m[1]:"")}
 function key(x){return encodeURIComponent([x.v,x.d,x.p,x.n].join("|"))}
 function card(x,q){return '<div class="card" data-k="'+key(x)+'"><div class="nm"><span class="tag">'+tg(x)+'</span>'+hl(x.n,q)+'</div><div class="path">'+esc(x.p)+'</div>'+chips(x.o,x.st)+nte(x.nt)+'<div class="go">이 항목만 보기 ›</div></div>'}
 function search(){const q=$("q").value.trim(),r=$("res");$("th").style.display=$("tree").style.display=mode=="fix"?"none":"";if(mode=="fix")return fixSearch(q,r);
