@@ -3,6 +3,10 @@
 새 md 파일을 만들면 아래에 한 줄씩 추가하세요. (순서대로 읽습니다)
 
 - kicc-pos-menu.md
+- kicc-pos-kitchen-menu.md
+- kicc-pos-payment-menu.md
+- kicc-pos-manage-menu.md
+- kicc-pos-system-menu.md
 - kicc-terminal-menu.md
 - kicc-kiosk-menu.md
 - kpn-pos-menu.md
