@@ -1,0 +1,7 @@
+# Cloudflare local secrets
+.dev.vars*
+.env*
+!.env.example
+
+# Node dependencies
+node_modules/
