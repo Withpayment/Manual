@@ -1,0 +1,8 @@
+name = "withpayment-lens-ai"
+main = "src/index.js"
+compatibility_date = "2026-11-09"
+
+[vars]
+# Change this to the exact origin serving the LENS website.
+ALLOWED_ORIGIN = "https://withpayment.github.io"
+OPENAI_MODEL = "gpt-6-astra"
