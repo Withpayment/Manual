@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  // After deploying the Worker, replace this URL with its workers.dev URL.
-  const API_URL = "poke-55q.pages.dev";
+  // Cloudflare Worker endpoint for LENS AI search.
+  const API_URL = "https://withpayment-lens-ai.khk4987.workers.dev";
   const form = document.getElementById("lensAiForm");
   const question = document.getElementById("lensAiQuestion");
   const submit = document.getElementById("lensAiSubmit");
