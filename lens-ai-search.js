@@ -2,7 +2,7 @@
   "use strict";
 
   // After deploying the Worker, replace this URL with its workers.dev URL.
-  const API_URL = "https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev";
+  const API_URL = "poke-55q.pages.dev";
   const form = document.getElementById("lensAiForm");
   const question = document.getElementById("lensAiQuestion");
   const submit = document.getElementById("lensAiSubmit");
