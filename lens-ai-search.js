@@ -1,4 +1,5 @@
 (() => {
+  
   "use strict";
   // Cloudflare Worker endpoint for LENS AI search.
   const API_URL = "https://withpayment-lens-ai.khk4987.workers.dev";
