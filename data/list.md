@@ -12,6 +12,7 @@
 - kpn-pos-menu.md
 - kpn-terminal-menu.md
 - kpn-tableorder-menu.md
+- kpn-firstpos-asp-menu.md
 - kis-terminal-menu.md
 - kicc-fix.md
 - kpn-firstpos-fix.md
