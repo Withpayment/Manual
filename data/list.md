@@ -17,3 +17,4 @@
 - kicc-fix.md
 - kpn-firstpos-fix.md
 - kpn-tableorder-fix.md
+- kpn-tosspos-fix.md

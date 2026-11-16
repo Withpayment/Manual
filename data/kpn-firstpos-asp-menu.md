@@ -1,7 +1,7 @@
-# KPN · FirstPos ASP(전산) 메뉴얼
+# KPN · POS 메뉴얼 (FirstPos ASP 전산)
 종류: 메뉴얼
 VAN: KPN
-장비: ASP
+장비: POS
 
 ## FirstPos ASP › 안내
 - 이 자료의 기준 ※ 2016년 4월 FirstPOS ASP 매뉴얼을 바탕으로 정리함. 현재 ASP 화면과 메뉴 이름이 달라졌을 수 있음 (예: 최근 확인된 일부 항목은 이 자료에 없음). 메뉴 경로의 '>'는 ASP 상단·왼쪽 메뉴를 차례로 누르는 순서
