@@ -18,3 +18,4 @@
 - kpn-firstpos-fix.md
 - kpn-tableorder-fix.md
 - kpn-tosspos-fix.md
+- kpn-uporder-manual.md
