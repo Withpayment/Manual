@@ -1,6 +1,7 @@
 # 불러올 파일 목록
 
-새 md 파일을 만들면 아래에 한 줄씩 추가하세요. (순서대로 읽습니다)
+새 항목을 추가할 때는 이미 등록된 additions-menu.md / additions-fix.md에 이어 붙이세요.
+새로운 별도 md 파일을 만들 때만 이 목록에 한 줄을 추가합니다. (순서대로 읽습니다)
 
 - kicc-pos-menu.md
 - kicc-pos-kitchen-menu.md
