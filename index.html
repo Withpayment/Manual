@@ -38,7 +38,9 @@ h1 small{font-size:13px;font-weight:400;color:var(--mu)}
 @media(min-width:540px){.cat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .cat-card{background:var(--card);border:1.5px solid var(--bd);border-radius:14px;padding:14px 12px;text-align:center;cursor:pointer;transition:.15s}
 .cat-card.on{border-color:var(--ac);background:var(--ac-bg)}
-.cat-ic{font-size:28px;line-height:1.2;margin-bottom:4px}
+.cat-ic{display:flex;align-items:center;justify-content:center;width:34px;height:34px;margin:0 auto 7px;border-radius:10px;background:var(--bg);border:1px solid var(--bd);font-size:19px;line-height:1;filter:grayscale(1);opacity:.72}
+.cat-card.on .cat-ic{background:var(--card);opacity:.9}
+@media(max-width:400px){.cat-card{padding:12px 8px}.cat-ic{width:30px;height:30px;font-size:17px}}
 .cat-nm{font-size:15px;font-weight:700}
 .cat-sub{font-size:12px;color:var(--mu);margin-top:2px}
 
