@@ -477,7 +477,7 @@ function showDetail(x,push=true){
 $("res").onclick=e=>{
   const mo=e.target.closest(".more");if(mo){mo.outerHTML=MORE;return}
   if(e.target.closest("[data-reset-all]")){$("q").value="";fv="전체";fd="전체";fmod="";docType="all";renderAll();return}
-  if(e.target.closest(".back")){search();tree();return}
+  if(e.target.closest(".back")){if(history.state&&history.state.lensDetail){history.back()}else{search();tree()}return}
   const fc=e.target.closest(".card[data-f]");if(fc){showFix(FX[+fc.dataset.f]);return}
   const c=e.target.closest(".card[data-k],.rw[data-k],.sgb[data-k]");if(!c)return;
   const x=flat.find(y=>key(y)==c.dataset.k);if(x)showDetail(x);
@@ -504,7 +504,7 @@ function currentUrl(){
   return u;
 }
 function syncUrl(){if(!restoringUrl)history.replaceState({lens:true},"",currentUrl())}
-function pushDetailUrl(kind,value){if(!restoringUrl){const u=currentUrl();u.searchParams.set(kind,value);history.pushState({lens:true},"",u)}}
+function pushDetailUrl(kind,value){if(!restoringUrl){const u=currentUrl();u.searchParams.set(kind,value);history.pushState({lens:true,lensDetail:true},"",u)}}
 function restoreUrl(){
   restoringUrl=true;
   try{
