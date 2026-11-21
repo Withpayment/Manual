@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#145c79">
+<title>LENS · 자료 추가 도우미</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;color-scheme:light;--ink:#183244;--muted:#596a75;--accent:#146e91;--line:#d7e1e6;--bg:#f4f8fa;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--bg);line-height:1.55}
+main{max-width:900px;margin:auto;padding:24px 15px 72px}
+a{color:var(--accent)}
+nav{margin:0 0 14px;font-size:14px}
+h1{font-size:clamp(24px,5vw,32px);margin:0 0 8px}
+h2{font-size:20px;margin:0 0 14px}
+p{margin:9px 0}
+.muted{color:var(--muted)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px;box-shadow:0 2px 12px #1437480a}
+.notice{background:#eaf5f9;border-left:4px solid var(--accent);padding:12px 15px;border-radius:9px;margin-top:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+input,select,textarea{width:100%;border:1px solid #aabec9;border-radius:10px;padding:12px 11px;font:inherit;color:var(--ink);background:white;min-height:46px}
+textarea{min-height:78px;resize:vertical}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #65b9de;outline-offset:2px}
+small{display:block;font-weight:400;color:var(--muted)}
+button,.action{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:11px 14px;border:1px solid var(--accent);border-radius:10px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;min-height:46px}
+.primary{background:var(--accent);color:#fff}
+.secondary{background:#fff;color:var(--accent)}
+.danger{border-color:#c3ced5;color:#9a4040;background:white}
+button:disabled{opacity:.5;cursor:not-allowed}
+.step{border:1px solid var(--line);border-radius:12px;padding:13px;margin:11px 0}
+.step-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.step-top strong{font-size:15px}
+.step label{margin:7px 0 4px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0c2734;color:#f0fbff;padding:16px;border-radius:10px;font-size:13px;line-height:1.6;max-height:360px;overflow:auto}
+.error{color:#ac2c30;font-weight:700;min-height:24px}
+#status{font-size:14px;font-weight:700;min-height:22px;color:#16684c}
+.hide{display:none}
+@media(max-width:620px){main{padding:16px 12px 52px}.grid{grid-template-columns:1fr;gap:0}.panel{padding:15px}.actions>*{flex:1}}
+</style>
+</head>
+<body>
+<main>
+<nav><a href="index.html">← LENS 검색 화면으로 돌아가기</a></nav>
+<h1>✍️ 자료 추가 도우미</h1>
+<p class="muted">메뉴 경로와 문제 해결 방법을 입력하면 LENS가 읽는 자료 형식으로 자동 변환합니다. 코드를 직접 작성할 필요는 없습니다.</p>
+<div class="notice"><strong>게시 방법</strong> · 내용을 작성하고 <b>복사</b>한 뒤, GitHub의 해당 자료 파일 맨 아래에 붙여 넣고 <b>Commit changes</b>를 누르세요. 공개 사이트이므로 비밀번호·고객정보·카드번호를 적지 마세요. GitHub 계정의 저장소 편집 권한이 필요합니다.</div>
+<section class="panel" aria-labelledby="form-title">
+<h2 id="form-title">1. 자료 작성</h2>
+<form id="editor" novalidate>
+<div class="grid">
+<div><label for="kind">자료 종류</label><select id="kind"><option value="fix">🛠️ 문제 해결</option><option value="menu">📘 메뉴 경로</option></select></div>
+<div><label for="van">VAN사</label><select id="van"><option>KICC</option><option selected>KPN</option><option>KIS</option></select></div>
+<div><label for="device">장비 종류</label><select id="device"><option>POS</option><option selected>단말기</option><option>키오스크</option><option>테이블오더</option></select></div>
+<div><label for="model">장비·프로그램 모델 <small>선택 사항</small></label><input id="model" placeholder="예: 토스 터미널, EASYPOS"></div>
+</div>
+<label id="title-label" for="entry-title">증상 이름</label>
+<input id="entry-title" required placeholder="예: 영수증이 출력되지 않음">
+<div class="grid">
+<div><label for="keywords">관련 검색어 <small>선택 사항 · 띄어쓰기로 구분</small></label><input id="keywords" placeholder="예: 영수증 안나와 프린터 출력"></div>
+<div id="second-device-wrap"><label for="second-device">추가 적용 장비 <small>선택 사항</small></label><select id="second-device"><option value="">없음</option><option>POS</option><option>단말기</option><option>키오스크</option><option>테이블오더</option></select></div>
+</div>
+<div id="fix-details" class="grid">
+<div><label for="cause">원인 <small>선택 사항</small></label><input id="cause" placeholder="예: 용지 부족, 연결 오류"></div>
+<div><label for="tag">표시 문구 <small>선택 사항</small></label><input id="tag" placeholder="예: 후불·선불 공통"></div>
+</div>
+<label id="steps-label">해결 순서</label>
+<p class="muted" id="steps-hint">단계 이름과 안내 문구를 입력하세요. 필요한 만큼 단계를 추가할 수 있습니다.</p>
+<div id="steps"></div>
+<button class="secondary" id="add-step" type="button">＋ 단계 추가</button>
+</form>
+</section>
+<section class="panel" aria-labelledby="preview-title">
+<h2 id="preview-title">2. 내용 확인 및 게시</h2>
+<p class="muted">아래 내용은 작성한 정보를 바탕으로 자동 생성됩니다. 저장 전 내용을 검토하세요.</p>
+<p id="errors" class="error" role="alert"></p>
+<pre id="preview" aria-label="등록할 자료 미리보기"></pre>
+<div class="actions">
+<button id="copy" class="primary" type="button" disabled>📋 내용 복사</button>
+<a id="edit-link" class="action secondary" target="_blank" rel="noopener noreferrer" href="https://github.com/Withpayment/Manual/edit/main/data/additions-fix.md">GitHub에서 자료 파일 열기</a>
+</div>
+<p id="status" role="status" aria-live="polite"></p>
+<p class="muted" style="font-size:13px">복사한 내용을 GitHub 파일의 <b>맨 아래</b>에 빈 줄을 두고 붙여 넣으세요. 기존 줄은 지우지 마세요. 저장한 내용은 GitHub Pages가 갱신되면 검색에 나타납니다. 이 화면만 작성하거나 복사한 상태에서는 공개되지 않습니다.</p>
+</section>
+</main>
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var steps=$("steps"),nextId=0;
+function single(v){return String(v||"").replace(/[\r\n\u2028\u2029]+/g," ").trim()}
+function escapeSource(v){return single(v)}
+function newStep(title,value,note){
+  var section=document.createElement("div");section.className="step";section.dataset.id=String(++nextId);
+  section.innerHTML='<div class="step-top"><strong class="step-number">단계</strong><button type="button" class="danger remove" aria-label="단계 삭제">삭제</button></div>'+
+    '<label>단계 이름 <input class="step-name" placeholder="예: 프린터 점검" required></label>'+
+    '<label>안내 문구 <input class="step-value" placeholder="예: 용지를 넣고 전원을 확인하세요"></label>'+
+    '<label>주의 사항 (선택) <input class="step-note" placeholder="예: 설정 변경 전 현재 값을 기록"></label>';
+  section.querySelector(".step-name").value=title||"";
+  section.querySelector(".step-value").value=value||"";
+  section.querySelector(".step-note").value=note||"";
+  section.querySelector(".remove").addEventListener("click",function(){section.remove();renumber();refresh()});
+  steps.appendChild(section);renumber();refresh()
+}
+function renumber(){Array.from(steps.children).forEach(function(el,i){el.querySelector(".step-number").textContent="단계 "+(i+1)})}
+function collect(){
+  var type=$("kind").value,errors=[],title=escapeSource($("entry-title").value);
+  if(!title)errors.push(type==="menu"?"메뉴 경로를 입력하세요.":"증상 이름을 입력하세요.");
+  if(title.includes(" ※ ")||title.includes(" = "))errors.push("제목에 ' ※ ' 또는 ' = '는 사용할 수 없습니다.");
+  var itemRows=Array.from(steps.children),out=[];
+  itemRows.forEach(function(row,i){
+    var name=escapeSource(row.querySelector(".step-name").value);
+    var value=escapeSource(row.querySelector(".step-value").value);
+    var note=escapeSource(row.querySelector(".step-note").value);
+    if(!name&&(!value&&!note))return;
+    if(!name){errors.push((i+1)+"번 단계의 이름을 입력하세요.");return}
+    if(name.includes(" ※ ")||name.includes(" = ")||value.includes(" ※ ")||note.includes(" ※ "))errors.push((i+1)+"번 단계에 구분 기호 ' = ' 또는 ' ※ '가 들어 있습니다.");
+    if(value.includes(">")&&value.includes("|"))errors.push((i+1)+"번 단계의 안내 문구에는 '>' 와 '|'를 동시에 쓰지 마세요.");
+    if(type==="fix")name=(out.length+1)+". "+name.replace(/^\d+\.\s*/,"");
+    out.push("- "+name+(value?" = "+value:"")+(note?" ※ "+note:""));
+  });
+  if(!out.length)errors.push("내용을 한 단계 이상 입력하세요.");
+  var L=["## "+title,"VAN: "+$("van").value,"장비: "+$("device").value];
+  var model=escapeSource($("model").value),keywords=escapeSource($("keywords").value);
+  if(model)L.push("모델: "+model);
+  if(type==="fix"){
+    var d2=$("second-device").value,cause=escapeSource($("cause").value),tag=escapeSource($("tag").value);
+    if(d2&&d2!==$("device").value)L.push("장비2: "+d2);
+    if(cause)L.push("원인: "+cause);
+    if(tag)L.push("표시: "+tag);
+  }
+  if(keywords)L.push("키워드: "+keywords);
+  L.push.apply(L,out);
+  return {text:L.join("\n"),errors:errors,type:type}
+}
+function refresh(){
+  var type=$("kind").value,isMenu=type==="menu";
+  $("title-label").textContent=isMenu?"메뉴 경로 (› 로 구분)":"증상 이름";
+  $("entry-title").placeholder=isMenu?"예: 토스 터미널 › 설정 › 프린터":"예: 영수증이 출력되지 않음";
+  $("steps-label").textContent=isMenu?"메뉴 항목":"해결 순서";
+  $("steps-hint").textContent=isMenu?"메뉴 이름과 값/이동 순서를 입력하세요. '설정 > 출력 > 확인'처럼 안내할 수 있습니다.":"실행할 해결 단계를 순서대로 추가하세요.";
+  $("fix-details").classList.toggle("hide",isMenu);
+  $("second-device-wrap").classList.toggle("hide",isMenu);
+  var path="data/additions-"+(isMenu?"menu":"fix")+".md";
+  $("edit-link").href="https://github.com/Withpayment/Manual/edit/main/"+path;
+  $("edit-link").textContent=isMenu?"GitHub에서 메뉴 자료 파일 열기":"GitHub에서 문제 해결 자료 파일 열기";
+  var data=collect();
+  $("errors").textContent=data.errors.join(" ");
+  $("preview").textContent=data.text;
+  $("copy").disabled=data.errors.length>0;
+  $("status").textContent="";
+}
+$("editor").addEventListener("input",refresh);
+$("editor").addEventListener("change",refresh);
+$("add-step").addEventListener("click",function(){newStep("","","");steps.lastElementChild.querySelector(".step-name").focus()});
+$("copy").addEventListener("click",async function(){
+  var v=collect();if(v.errors.length){refresh();return}
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(v.text)}
+    else{
+      var t=document.createElement("textarea");t.value=v.text;t.style.position="fixed";t.style.opacity="0";
+      document.body.appendChild(t);t.select();if(!document.execCommand("copy"))throw Error("copy failed");t.remove();
+    }
+    $("status").textContent="내용을 복사했습니다. GitHub 자료 파일 맨 아래에 붙여 넣고 저장하세요.";
+  }catch(e){$("status").textContent="자동 복사에 실패했습니다. 위 미리보기 내용을 직접 선택해 복사해 주세요."}
+});
+newStep("프린터 용지와 전원 확인","용지 상태와 전원 연결을 확인하세요","");
+})();
+</script>
+</body>
+</html>
