@@ -40,11 +40,11 @@ VAN: KIS
 VAN: KIS
 모델: KIS-3210
 키워드: KIS-3210 포트 LAN POS 전화선 전원 어댑터
-- 통신 포트 = Ethernet(LAN) / POS / 전용선 / 핀패드 / 전화기 / 전화선
+- 통신 포트 = Ethernet(LAN) / POS 표기 포트 / 전용선 / 핀패드 / 전화기 / 전화선
 - 전원 = DC 9V / 3A
 - 프린터 = 2인치 써멀 전표(약 50mm)
 - 확인 순서 = 장비 후면 모델명 확인 > 사용 중인 연결 포트 확인 > 해당 통신선 체결 확인
-- 주의 = KIS-2420의 24V 어댑터와 혼용 금지
+- 주의 = KIS 공식 제품 페이지에서 2인치 단말기는 POS 연동 불가로 안내함 ※ 물리적인 POS 표기 포트와 POS 연동 지원은 별개이며 KIS-2420의 24V 어댑터와 혼용 금지
 - 공식 설명서 = https://www.kisvan.co.kr/product-data/KIS-3210.pdf
 - 공식 제품 정보 = https://www.kisvan.co.kr/sub02_01_03.html
 
