@@ -25,6 +25,7 @@
 - kis-terminal-verified-menu.md
 - terminal-model-reference.md
 - pos-kiosk-uporder-reference.md
+- pos-kiosk-uporder-official-index.md
 - additions-menu.md
 - terminal-field-fix.md
 - additions-fix.md
