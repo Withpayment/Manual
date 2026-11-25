@@ -23,6 +23,7 @@
 - kpn-terminal-verified-menu.md
 - kicc-terminal-verified-menu.md
 - kis-terminal-verified-menu.md
+- terminal-model-reference.md
 - additions-menu.md
 - terminal-field-fix.md
 - additions-fix.md
