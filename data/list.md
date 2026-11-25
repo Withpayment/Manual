@@ -25,6 +25,7 @@
 - kis-terminal-verified-menu.md
 - terminal-model-reference.md
 - pos-kiosk-uporder-reference.md
+- imupos-pdf-structured-part1.md
 - additions-menu.md
 - terminal-field-fix.md
 - uporder-troubleshooting-official.md
