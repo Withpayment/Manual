@@ -20,5 +20,8 @@
 - kpn-firstpos-fix.md
 - kpn-tableorder-fix.md
 - kpn-tosspos-fix.md
+- kpn-terminal-verified-menu.md
+- kicc-terminal-verified-menu.md
+- kis-terminal-verified-menu.md
 - additions-menu.md
 - additions-fix.md
