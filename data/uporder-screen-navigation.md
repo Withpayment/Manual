@@ -3,7 +3,6 @@
 VAN: KPN
 장비: 테이블오더
 모델: UP오더 신버전 매뉴얼 v1.3
-출처: https://imupos.com/upload/UP%EC%98%A4%EB%8D%94%28%EC%8B%A0%EB%B2%84%EC%A0%84%29%20%EB%A7%A4%EB%89%B4%EC%96%BC_ver1.3%280%29.pdf
 
 ## UP오더 › 관리자 로그인 › 설정 화면
 키워드: 관리자 설정화면 진입 버튼 위치 업오더
