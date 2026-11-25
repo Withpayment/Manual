@@ -29,5 +29,6 @@
 - imupos-pdf-structured-part2.md
 - additions-menu.md
 - terminal-field-fix.md
+- uporder-screen-navigation.md
 - uporder-troubleshooting-official.md
 - additions-fix.md
