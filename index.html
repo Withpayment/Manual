@@ -185,7 +185,14 @@ function LENS_PARSE(t,f,VANS,FX,W){
    const v=b.meta["VAN"]||H.VAN,d=b.meta["장비"]||H["장비"];
    if(!v||!d){W.push(f+": VAN, 장비 정보가 없는 메뉴 항목이 있습니다");continue}
    if(!b.items.length){W.push(f+": '"+b.title.slice(0,20)+"' 묶음에 내용(- 줄)이 없습니다");continue}
-   (VANS[v]=VANS[v]||{});(VANS[v][d]=VANS[v][d]||[]).push({p:b.title,i:b.items,m:b.meta["모델"]||H["모델"]||"",k:b.meta["키워드"]||""});
+   // 테이블오더는 단일 업오더 메뉴 트리로 표시한다. 중복된 제품 소개용 가지는 제외.
+   let p=b.title;
+   if(d==="테이블오더"){
+    const parts=p.split(" › ");
+    if(["아임유 UP오더","아임유 UP오더 TAG(NFC)","IMUPOS"].includes(parts[0]))continue;
+    if(parts[0]!=="업오더(아임유)")p="업오더(아임유) › "+p;
+   }
+   (VANS[v]=VANS[v]||{});(VANS[v][d]=VANS[v][d]||[]).push({p,i:b.items,m:b.meta["모델"]||H["모델"]||"",k:b.meta["키워드"]||""});
   }
  }
 }
