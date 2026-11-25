@@ -24,4 +24,5 @@
 - kicc-terminal-verified-menu.md
 - kis-terminal-verified-menu.md
 - additions-menu.md
+- terminal-field-fix.md
 - additions-fix.md
