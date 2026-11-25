@@ -2,8 +2,6 @@
 종류: 메뉴얼
 VAN: KPN
 모델: IMUPOS · UP POS · UP KIOSK
-출처: https://imupos.com/upload/IMUPOS%20%ED%86%B5%ED%95%A9%EB%A7%A4%EB%89%B4%EC%96%BC_v1.0.pdf
-기준: 원본 PDF 인쇄 페이지 4~39 · 실제 조작 단계 재구성
 
 ## IMUPOS USMS › 신규 매장 서비스 신청
 장비: POS
