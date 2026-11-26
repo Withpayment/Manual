@@ -12,6 +12,7 @@
 - kicc-terminal-menu.md
 - kicc-kiosk-menu.md
 - kpn-pos-menu.md
+- kpn-tosspos-official-navigation.md
 - kpn-terminal-menu.md
 - kpn-tableorder-menu.md
 - kpn-uporder-menu.md
