@@ -15,6 +15,8 @@
 - kpn-tosspos-official-navigation.md
 - kpn-tosspos-extended-navigation.md
 - kpn-tosspos-2026-feature-navigation.md
+- kpn-tosspos-loyalty-navigation.md
+- kpn-tosspos-naver-review-navigation.md
 - kpn-terminal-menu.md
 - kpn-tableorder-menu.md
 - kpn-uporder-menu.md
