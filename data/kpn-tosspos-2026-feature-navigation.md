@@ -83,4 +83,4 @@ VAN: KPN
 - 메뉴 경로 = 공식 공개 가이드에서 정확한 연결 버튼·화면 이동 순서 확인되지 않음 ※ 다른 POS 회사의 당근 연동 경로를 토스POS에 적용하지 말 것
 - 주의 = 실제 제공 시점·대상 매장·지원 범위는 토스플레이스에 확인. 발표된 기능 전체를 이미 제공 중이라고 안내하지 말 것
 - 토스플레이스 참고 = https://www.tossplace.com/story/carrot_biz_1
-- 당근 보도자료 = https://about.daangn.com/company/pr/archive/%EB%8B%B9%EA%B7%BC-%EC%A0%84%EA%B5%AD-40%EB%A7%8C-%ED%86%A0%EC%8A%A4-%EA%B0%80%EB%A7%B9%EC%A0%90-%ED%92%88%EB%8A%94%EB%8B%A4%ED%99%8D%EB%B3%B4%EC%A3%BC%EB%AC%B8%EC%A3%BC%EB%AC%B8%EA%B2%B0%EC%A0%9C-%ED%95%98%EB%82%98%EB%A1%9C/
+- 당근 보도자료 = https://about.daangn.com/company/pr/archive/%EB%8B%B9%EA%B7%BC-%EC%A0%84%EA%B5%AD-40%EB%A7%8C-%ED%86%A0%EC%8A%A4-%EA%B0%80%EB%A7%B9%EC%A0%90-%ED%92%88%EB%8A%94%EB%8B%A4%ED%99%8D%EB%B3%B4%EC%A3%BC%EB%AC%B8%EA%B2%B0%EC%A0%9C-%ED%95%98%EB%82%98%EB%A1%9C/
