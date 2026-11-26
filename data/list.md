@@ -8,6 +8,7 @@
 - kicc-pos-payment-menu.md
 - kicc-pos-manage-menu.md
 - kicc-pos-system-menu.md
+- kicc-easypos-verified-navigation.md
 - kicc-terminal-menu.md
 - kicc-kiosk-menu.md
 - kpn-pos-menu.md
